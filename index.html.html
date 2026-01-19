@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy 17th Birthday Harshita ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(270deg, #ff758c, #ff7eb3, #fad0c4);
+      background-size: 600% 600%;
+      animation: bgMove 12s ease infinite;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 40px 20px;
+      box-sizing: border-box;
+    }
+
+    .page.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .seventeen {
+      font-size: 120px;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 20px #fff, 0 0 40px #ff9a9e, 0 0 60px #ff5f6d;
+      animation: glow 2s infinite alternate;
+      margin-bottom: 20px;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff, 0 0 20px #ff9a9e; }
+      to { text-shadow: 0 0 30px #fff, 0 0 60px #ff9a9e; }
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 14px 30px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      background: #fff;
+      color: #ff5f6d;
+      font-weight: bold;
+    }
+
+    video {
+      width: 90%;
+      max-width: 500px;
+      border-radius: 20px;
+    }
+
+    audio { display:none; }
+    canvas { position: fixed; top:0; left:0; pointer-events:none; }
+  </style>
+</head>
+<body>
+
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- LOCK SCREEN -->
+<div class="page active" id="lockScreen">
+  <div class="seventeen">17</div>
+  <h2>Enter Password 💖</h2>
+  <input type="password" id="passwordInput" placeholder="Password" style="padding:12px;border-radius:20px;border:none;font-size:16px;text-align:center;">
+  <button onclick="checkPassword()">Unlock</button>
+  <p id="error" style="display:none;">Wrong password 😔</p>
+</div>
+
+<!-- PAGE 1 -->
+<div class="page" id="page1">
+  <div class="seventeen">17</div>
+  <h2 id="countdown">3</h2>
+  <h1 id="birthdayText" style="display:none;">Happy Birthday Sachi 🎂❤️</h1>
+  <canvas id="fireworks"></canvas>
+  <button onclick="nextPage()">Next</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <div class="seventeen">17</div>
+  <h2>Babbyyuuu Sachi 💖</h2>
+  <p style="max-width:600px;">
+    Aaj tum 17 ki ho rahi ho par mere liye tum hamesha meri duniya rahogi.
+    Babbyyuuu sachi, meri har khushi tum ho ❤️
+  </p>
+  <button onclick="nextPage()">Next</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+  <div class="seventeen">17</div>
+  <h2>Just for You 🎥</h2>
+  <video controls>
+    <source src="video.mp4" type="video/mp4">
+  </video>
+  <button onclick="nextPage()">Next</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page4">
+  <div class="seventeen">17</div>
+  <h2>Abhi aur surprises aane wale hai 😌</h2>
+  <button onclick="nextPage()">Next</button>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page" id="page5">
+  <div class="seventeen">17</div>
+  <h2>Once Again Happy Birthday Babyyyuuuuu 🎂</h2>
+  <button onclick="nextPage()">Next</button>
+</div>
+
+<!-- PAGE 6 -->
+<div class="page" id="page6">
+  <div class="seventeen">17</div>
+  <h2>
+    Aisa birthday manaunga ki lagega
+    jaise tum pehli baar paida hui hoooo 💖
+  </h2>
+</div>
+
+<script>
+  const PASSWORD = "242624";
+  let currentPage = 1;
+
+  function checkPassword() {
+    const input = document.getElementById("passwordInput").value;
+    const lock = document.getElementById("lockScreen");
+    const page = document.getElementById("page1");
+    const err = document.getElementById("error");
+
+    if (input === PASSWORD) {
+      lock.classList.remove("active");
+      currentPage = 1;
+      page.classList.add("active");
+    } else {
+      err.style.display = "block";
+    }
+  }
+
+  function nextPage(){
+    document.getElementById(`page${currentPage}`).classList.remove('active');
+    currentPage++;
+    document.getElementById(`page${currentPage}`).classList.add('active');
+  }
+
+  // Countdown
+  let count = 3;
+  const interval = setInterval(()=>{
+    count--;
+    if(count>0) countdown.textContent = count;
+    else{
+      countdown.style.display='none';
+      birthdayText.style.display='block';
+      startFireworks();
+      clearInterval(interval);
+    }
+  },1000);
+
+  // Fireworks
+  function startFireworks(){
+    const c = fireworks;
+    const ctx = c.getContext('2d');
+    c.width = innerWidth;
+    c.height = innerHeight;
+    let p=[];
+    for(let i=0;i<120;i++) p.push({x:c.width/2,y:c.height/2,a:Math.random()*6,s:Math.random()*6+2,l:100});
+    function anim(){
+      ctx.clearRect(0,0,c.width,c.height);
+      p.forEach((o,i)=>{
+        o.x+=Math.cos(o.a)*o.s;
+        o.y+=Math.sin(o.a)*o.s;
+        o.l--;
+        ctx.fillStyle=`rgba(255,255,255,${o.l/100})`;
+        ctx.fillRect(o.x,o.y,3,3);
+        if(o.l<=0) p.splice(i,1);
+      });
+      requestAnimationFrame(anim);
+    }
+    anim();
+  }
+</script>
+
+</body>
+</html>
